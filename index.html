@@ -341,11 +341,15 @@
       #gasprice {
         width: fit-content;
       }
-      /* hide default spin buttons because they only appear on the right side */
+      /* WEBKIT - hide default spin buttons because they only appear on the right side */
       #gasprice::-webkit-outer-spin-button,
       #gasprice::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
+      }
+      /* FIREFOX - hide default spin buttons because they only appear on the right side */
+      #gasprice {
+        -moz-appearance: textfield;
       }
       #gas-increment-btn,
       #gas-decrement-btn {
