@@ -2,7 +2,9 @@
 
 A simple web page to drain an Ethereum account
 
-This dapp allows users to send the remaining small amounts of ETH from an account, also known as "dust," to another account.
+This dapp allows users to send their entire ETH balance from one account to another account without leftover "dust".
+
+![image](https://github.com/stoooops/eth-dust-collector/assets/3518037/5c6cccb5-b967-4c7f-9993-5a721bd6d26c)
 
 ## Usage
 
