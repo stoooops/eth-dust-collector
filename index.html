@@ -765,12 +765,29 @@
        */
       async function displayConnectedAccount(address) {
         console.log("connected: " + address);
-        // get ENS name if available
-        const ens = await provider.lookupAddress(address);
-        console.log("ens", ens);
+        // get the network id and see if we are on mainnet
+        const network = await provider.getNetwork();
+        console.log("network", network);
+        let ens = undefined
+        if (network.chainId === 1) {
+          // get ENS name if available
+          ens = await provider.lookupAddress(address);
+          console.log("ens", ens);
+        }
         const display = ens ? ens : address;
         document.getElementById("account").innerHTML = display;
-        document.getElementById("accountrow").href = "https://etherscan.io/address/" + address;
+        const url = network.chainId === 1 ? "https://etherscan.io/address/"
+          // goerli
+          : network.chainId === 5 ? "https://goerli.etherscan.io/address/"
+          // optimism
+          : network.chainId === 10 ? "https://optimistic.etherscan.io/address/"
+          // arbitrum
+          : network.chainId === 42161 ? "https://arbiscan.io/address/"
+          // sepolia
+          : network.chainId === 11155111 ? "https://sepolia.etherscan.io/address/"
+          : "https://etherscan.io/address/";
+        document.getElementById("accountrow").href = `${url}${address}`;
+
       }
 
       /** Load and display the connected account */
