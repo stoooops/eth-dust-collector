@@ -690,7 +690,7 @@
         // format as gwei and set as initial value for input element, rounding up at two decimals
         const withinTwoBlocksEstimate = 1.125 * 1.125 * ethers.utils.formatUnits(networkGasPrice.maxFeePerGas, "gwei");
         const formattedTwoDecimals = Math.ceil(100 * withinTwoBlocksEstimate) / 100;
-        document.getElementById("gasprice").value = formattedTwoDecimals;
+        // document.getElementById("gasprice").value = formattedTwoDecimals;
 
         setInterval(async () => {
           networkGasPrice = await fetchFeeData();
