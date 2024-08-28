@@ -20,27 +20,14 @@
       name="keywords"
       content="Ethereum, ETH, Type 1 Transaction, Drain Account"
     />
-    <meta
-      name="author"
-      content="Cory Gabrielsen (cory.eth)"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="author" content="Cory Gabrielsen (cory.eth)" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧹</text></svg>"
     />
-    <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-    />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css?family=Bree+Serif"
       rel="stylesheet"
@@ -491,6 +478,20 @@
         >
         transaction
       </h3>
+      <h4
+        style="
+          background-color: #fff3e6;
+          border-radius: 1rem;
+          color: #ff6600;
+          margin: 0 auto 2rem auto;
+          padding: 1rem;
+          text-align: center;
+          width: fit-content;
+        "
+      >
+        ⚠️ 2024 update: MetaMask may flag this transaction as potentially risky.
+        However, this tool remains safe and effective.
+      </h4>
       <!-- <h3>Leftover dust balance included as validator tip, leaving account with 0 ETH.</h3> -->
     </header>
     <!-- Main body of page with form -->
@@ -506,32 +507,17 @@
           <label id="account"></label>
         </a>
         <!-- Balance -->
-        <section
-          class="modalrow"
-          id="balancerow"
-          style="display: none"
-        >
+        <section class="modalrow" id="balancerow" style="display: none">
           <label></label>
           <div id="balance"></div>
         </section>
         <!-- Input amount -->
-        <section
-          class="modalrow"
-          id="amountrow"
-        >
-          <button
-            id="maxbutton"
-            onclick="onclickMaxButton()"
-          >
-            max
-          </button>
+        <section class="modalrow" id="amountrow">
+          <button id="maxbutton" onclick="onclickMaxButton()">max</button>
           <div id="sendamount-wrapper"><div id="sendamount"></div></div>
         </section>
         <!-- Input to address -->
-        <section
-          class="modalrow"
-          id="torow"
-        >
+        <section class="modalrow" id="torow">
           <label></label>
           <input
             type="text"
@@ -541,10 +527,7 @@
           />
         </section>
         <!-- Input gas price -->
-        <section
-          class="modalrow"
-          id="gasrow"
-        >
+        <section class="modalrow" id="gasrow">
           <label></label>
           <div id="basefee">
             <label>BASEFEE</label>
@@ -567,37 +550,18 @@
           </div>
         </section>
         <!-- Button -->
-        <section
-          class="modalrow"
-          id="buttonrow"
-        >
-          <button
-            id="sendbutton"
-            onclick="sendEthTransaction()"
-          >
-            Send
-          </button>
+        <section class="modalrow" id="buttonrow">
+          <button id="sendbutton" onclick="sendEthTransaction()">Send</button>
         </section>
         <!-- Display transaction hash -->
-        <section
-          class="modalrow"
-          id="txhashrow"
-        >
-          <a
-            id="txhash"
-            target="_blank"
-            href=""
-          ></a>
+        <section class="modalrow" id="txhashrow">
+          <a id="txhash" target="_blank" href=""></a>
         </section>
       </div>
 
       <h4>
         Made with love by <span id="cory_eth">cory.eth</span>, please follow
-        <a
-          id="twitterlink"
-          href="https://twitter.com/cory_eth"
-          >@cory_eth</a
-        >
+        <a id="twitterlink" href="https://twitter.com/cory_eth">@cory_eth</a>
       </h4>
     </main>
     <!-- ethers.js -->
@@ -611,7 +575,9 @@
       function loadWeb3Provider() {
         if (window.ethereum === undefined) {
           console.error("No ethereum object found");
-          alert("ERROR\n\nNo Ethereum provider found.\n\nPlease install a wallet extension like MetaMask.");
+          alert(
+            "ERROR\n\nNo Ethereum provider found.\n\nPlease install a wallet extension like MetaMask."
+          );
           return null;
         }
         return new ethers.providers.Web3Provider(window.ethereum);
@@ -645,11 +611,18 @@
         const feeData = await provider.getFeeData();
         const feeDataGasPrice = feeData.gasPrice.toString();
         const feeDataMaxFeePerGas = feeData.maxFeePerGas.toString();
-        const feeDataMaxPriorityFeePerGas = feeData.maxPriorityFeePerGas.toString();
+        const feeDataMaxPriorityFeePerGas =
+          feeData.maxPriorityFeePerGas.toString();
         console.log("feeData", feeData);
         console.log("(legacy)   feeData.gasPrice            ", feeDataGasPrice);
-        console.log("(EIP-1559) feeData.maxFeePerGas        ", feeDataMaxFeePerGas);
-        console.log("(EIP-1559) feeData.maxPriorityFeePerGas", feeDataMaxPriorityFeePerGas);
+        console.log(
+          "(EIP-1559) feeData.maxFeePerGas        ",
+          feeDataMaxFeePerGas
+        );
+        console.log(
+          "(EIP-1559) feeData.maxPriorityFeePerGas",
+          feeDataMaxPriorityFeePerGas
+        );
 
         return {
           gasPrice: feeDataGasPrice,
@@ -678,31 +651,31 @@
         return baseFee;
       }
 
-      /* spawn daemon to update gas price */
-      async function startGasPriceDaemon() {
-        const interval = 15 * 1000;
-        console.log("starting gas price daemon with interval", interval);
+      // /* spawn daemon to update gas price */
+      // async function startGasPriceDaemon() {
+      //   const interval = 15 * 1000;
+      //   console.log("starting gas price daemon with interval", interval);
 
-        let networkGasPrice = await fetchFeeData();
-        document.getElementById("basefee_value").innerHTML = formatBASEFEE(networkGasPrice.maxFeePerGas);
+      //   let networkGasPrice = await fetchFeeData();
+      //   document.getElementById("basefee_value").innerHTML = formatBASEFEE(networkGasPrice.maxFeePerGas);
 
-        // set initial gwei estimate
-        // format as gwei and set as initial value for input element, rounding up at two decimals
-        const withinTwoBlocksEstimate = 1.125 * 1.125 * ethers.utils.formatUnits(networkGasPrice.maxFeePerGas, "gwei");
-        const formattedTwoDecimals = Math.ceil(100 * withinTwoBlocksEstimate) / 100;
-        // document.getElementById("gasprice").value = formattedTwoDecimals;
+      //   // set initial gwei estimate
+      //   // format as gwei and set as initial value for input element, rounding up at two decimals
+      //   const withinTwoBlocksEstimate = 1.125 * 1.125 * ethers.utils.formatUnits(networkGasPrice.maxFeePerGas, "gwei");
+      //   const formattedTwoDecimals = Math.ceil(100 * withinTwoBlocksEstimate) / 100;
+      //   // document.getElementById("gasprice").value = formattedTwoDecimals;
 
-        setInterval(async () => {
-          networkGasPrice = await fetchFeeData();
-          const networkPriceGwei = ethers.utils.formatUnits(networkGasPrice.maxFeePerGas, "gwei");
-          document.getElementById("basefee_value").innerHTML = formatBASEFEE(networkGasPrice.maxFeePerGas);
-          // animate bold briefly
-          document.getElementById("basefee_value").style.fontWeight = "bold";
-          setTimeout(() => {
-            document.getElementById("basefee_value").style.fontWeight = "normal";
-          }, 300);
-        }, interval);
-      }
+      //   setInterval(async () => {
+      //     networkGasPrice = await fetchFeeData();
+      //     const networkPriceGwei = ethers.utils.formatUnits(networkGasPrice.maxFeePerGas, "gwei");
+      //     document.getElementById("basefee_value").innerHTML = formatBASEFEE(networkGasPrice.maxFeePerGas);
+      //     // animate bold briefly
+      //     document.getElementById("basefee_value").style.fontWeight = "bold";
+      //     setTimeout(() => {
+      //       document.getElementById("basefee_value").style.fontWeight = "normal";
+      //     }, 300);
+      //   }, interval);
+      // }
 
       function formatPretty(value) {
         // if zero, return zero
@@ -768,7 +741,7 @@
         // get the network id and see if we are on mainnet
         const network = await provider.getNetwork();
         console.log("network", network);
-        let ens = undefined
+        let ens = undefined;
         if (network.chainId === 1) {
           // get ENS name if available
           ens = await provider.lookupAddress(address);
@@ -776,18 +749,23 @@
         }
         const display = ens ? ens : address;
         document.getElementById("account").innerHTML = display;
-        const url = network.chainId === 1 ? "https://etherscan.io/address/"
-          // goerli
-          : network.chainId === 5 ? "https://goerli.etherscan.io/address/"
-          // optimism
-          : network.chainId === 10 ? "https://optimistic.etherscan.io/address/"
-          // arbitrum
-          : network.chainId === 42161 ? "https://arbiscan.io/address/"
-          // sepolia
-          : network.chainId === 11155111 ? "https://sepolia.etherscan.io/address/"
-          : "https://etherscan.io/address/";
+        const url =
+          network.chainId === 1
+            ? "https://etherscan.io/address/"
+            : // goerli
+            network.chainId === 5
+            ? "https://goerli.etherscan.io/address/"
+            : // optimism
+            network.chainId === 10
+            ? "https://optimistic.etherscan.io/address/"
+            : // arbitrum
+            network.chainId === 42161
+            ? "https://arbiscan.io/address/"
+            : // sepolia
+            network.chainId === 11155111
+            ? "https://sepolia.etherscan.io/address/"
+            : "https://etherscan.io/address/";
         document.getElementById("accountrow").href = `${url}${address}`;
-
       }
 
       /** Load and display the connected account */
@@ -796,8 +774,10 @@
         const address = await signer.getAddress();
         await displayConnectedAccount(address);
         document.getElementById("sendamount").disabled = false;
-        document.getElementById("sendamount").style.backgroundColor = "transparent";
-        document.getElementById("sendamount").style.border = "1px solid transparent";
+        document.getElementById("sendamount").style.backgroundColor =
+          "transparent";
+        document.getElementById("sendamount").style.border =
+          "1px solid transparent";
         console.log("loadDisplayConnectedAccount() done");
       }
 
@@ -812,9 +792,14 @@
           return;
         }
         // Prevent the form from refreshing the page
-        const balance = ethers.utils.parseEther(document.getElementById("balance").balance);
+        const balance = ethers.utils.parseEther(
+          document.getElementById("balance").balance
+        );
         // tx gas price in ETH = 21000 * gas price in wei
-        const userGasPriceSpecified = ethers.utils.parseUnits(document.getElementById("gasprice").value, "gwei");
+        const userGasPriceSpecified = ethers.utils.parseUnits(
+          document.getElementById("gasprice").value,
+          "gwei"
+        );
         const txGasPrice = userGasPriceSpecified.mul(21000);
         console.log("balance       ", balance.toString());
         console.log("txGasPrice    ", txGasPrice.toString());
@@ -828,8 +813,11 @@
         } else {
           // balance >= txGasPriceETH
           const calc = balance.sub(txGasPrice);
-          document.getElementById("sendamount").sendAmount = ethers.utils.formatEther(calc);
-          document.getElementById("sendamount").innerHTML = formatPretty(ethers.utils.formatEther(calc));
+          document.getElementById("sendamount").sendAmount =
+            ethers.utils.formatEther(calc);
+          document.getElementById("sendamount").innerHTML = formatPretty(
+            ethers.utils.formatEther(calc)
+          );
           document.getElementById("sendamount").style.color = "black";
           enableSend();
         }
@@ -846,7 +834,8 @@
       function disableSend(message) {
         document.getElementById("sendbutton").disabled = true;
         document.getElementById("sendbutton").innerHTML = message;
-        document.getElementById("sendbutton").style.backgroundColor = "lightgrey";
+        document.getElementById("sendbutton").style.backgroundColor =
+          "lightgrey";
       }
 
       /**
@@ -856,7 +845,8 @@
         console.log("onclickMaxButton()");
         // set the gas price to 0 so we can set the max amount
         document.getElementById("gasprice").value = 0;
-        document.getElementById("gasprice").style.animation = "example 0.4s ease-in-out forwards";
+        document.getElementById("gasprice").style.animation =
+          "example 0.4s ease-in-out forwards";
 
         setTimeout(function () {
           document.getElementById("gasprice").style.animation = "";
@@ -896,7 +886,9 @@
         const gasPrice = change.div(gasUsed);
         console.log("(calculated) gasPrice    ", gasPrice.toString());
         // sanity check, we should verify that balance === gasPrice * gasUsed + amount
-        const calculated = gasPrice.mul(gasUsed).add(ethers.utils.parseEther(amount));
+        const calculated = gasPrice
+          .mul(gasUsed)
+          .add(ethers.utils.parseEther(amount));
         console.log("(known)      balance     ", balance.toString());
         console.log("(calculated) used        ", calculated.toString());
         const leftover = balance.sub(calculated);
@@ -934,8 +926,11 @@
         document.getElementById("txhashrow").style.display = "flex";
         // check network to determine etherscan url
         const network = await signer.provider.getNetwork();
-        const networkString = network.name === "homestead" ? "" : `${network.name}.`;
-        document.getElementById("txhash").href = `https://${networkString}etherscan.io/tx/${tx.hash}`;
+        const networkString =
+          network.name === "homestead" ? "" : `${network.name}.`;
+        document.getElementById(
+          "txhash"
+        ).href = `https://${networkString}etherscan.io/tx/${tx.hash}`;
         disableSend("Transaction Sent");
 
         // spawn faster balance update daemon to watch for send transaction confirmation
@@ -947,7 +942,9 @@
        */
       async function connectWallet() {
         console.log("connectWallet()");
-        const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+        const accounts = await ethereum.request({
+          method: "eth_requestAccounts",
+        });
         console.log("accounts", accounts);
         return accounts;
       }
@@ -973,7 +970,7 @@
         // track if the user switches their account, and update the UI
         ethereum.on("accountsChanged", accountSwitcher);
         // keep gas price up to date
-        await startGasPriceDaemon();
+        // await startGasPriceDaemon();
         // calculate and set max send amount as initial value based on current balance/gas
         maxFillSendAmount();
         console.log("asyncOnPageLoad() complete");
@@ -1055,7 +1052,9 @@
         const isMetaMaskInstalled = ethereum !== undefined;
         if (!isMetaMaskInstalled) {
           console.error("No ethereum object found");
-          alert("ERROR\n\nNo Ethereum provider found.\n\nPlease install a wallet extension like MetaMask.");
+          alert(
+            "ERROR\n\nNo Ethereum provider found.\n\nPlease install a wallet extension like MetaMask."
+          );
           return;
         }
 
